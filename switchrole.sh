@@ -7,12 +7,13 @@
 # set this to the start of the line number of [mfa] credentials in .aws/credential
 # from the example above, LINE_NUMBER=5
 LINE_NUMBER=<Start line number>
+MFA_ARN=<ARN>
  
 echo "Enter MFA code: "
  
 read ENTERED_VALUE
  
-aws sts get-session-token --serial-number <Assigned MFA ARN> --token-code $ENTERED_VALUE --duration-seconds 129600 > assume-role-output.txt
+aws sts get-session-token --serial-number $MFA_ARN --token-code $ENTERED_VALUE --duration-seconds 129600 > assume-role-output.txt
  
 accesskey=`cat assume-role-output.txt | jq -r '.Credentials.AccessKeyId'`
 accesssecret=`cat assume-role-output.txt | jq -r '.Credentials.SecretAccessKey'`
