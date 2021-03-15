@@ -15,7 +15,14 @@ Fill in with your aws access_key and secret under [default] and leave the [mfa] 
 ### .aws/config
 Fill in the role_arn to the role you are attempting to switch to
 
-Execute the script by calling
+
+Test by using which requires you to enter the OTP everytime you open a new terminal
+```
+aws s3 ls --profile dev
+```
+
+And using the switchrole script will require you to enter only once every 8hrs
 ```
 sh switchrole.sh
+aws s3 ls --profile mfa
 ```
