@@ -5,17 +5,25 @@ Using this, will only require you to enter the token once every 8hrs (depending 
 
 ## How to use
 
-### switchrole.sh
-Fill in LINE_NUMBER=5 (if you are using the default provided .aws/credentials 
-MFA_TOKEN to the ARN for your 2FA on AWS User.
-
 ### .aws/credentials 
-Copy the [.aws/credentials](sample credentials file) and place is in ~/.aws/credentials
-Fill in with your aws access_key and secret under [default] and leave the [mfa] portion blank.
+Copy the [sample credentials file](.aws/credentials) and place is in ~/.aws/credentials<br/>
+Fill in with your aws access_key and secret under `[default]` and leave the `[mfa]` portion blank.<br/>
+Enter 
 
 ### .aws/config
-Copy the [.aws/config](sample config file) and place is in ~/.aws/config
-Fill in the role_arn to the role you are attempting to switch to
+Copy the [sample config file](.aws/config) and place is in ~/.aws/config<br/>
+Fill in the both instances of `role_arn=` to the role you are attempting to switch to<br/>
+Fill in the `mfa_serial=` with your MFA ARN if required
+
+
+### switchrole.sh - use this if MFA is NOT required
+Count which line [mfa] is in your (~/.aws/credentials) file<br/>
+Fill in `LINE_NUMBER=5` (if you are using the default provided .aws/credentials)
+
+### switchrole-with-mfa.sh - use this MFA is required
+Count which line [mfa] is in your (~/.aws/credentials) file<br/>
+Fill in `LINE_NUMBER=5` (if you are using the default provided .aws/credentials)<br/>
+Fill in `MFA_ARN` with your MFA ARN from above
 
 
 Test by using which requires you to enter the OTP everytime you open a new terminal
@@ -23,8 +31,10 @@ Test by using which requires you to enter the OTP everytime you open a new termi
 aws s3 ls --profile dev
 ```
 
-And using the switchrole script will require you to enter only once every 8hrs
+And using the switchrole script will require you to enter only once every 8hrs<br/>
+Use the correct switchrole file 
 ```
 sh switchrole.sh
+sh switchrole-with-mfa.sh
 aws s3 ls --profile mfa
 ```
